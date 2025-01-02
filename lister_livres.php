@@ -23,10 +23,10 @@ session_start();
         include 'barre.php';
     ?>
 
+
     <div class="row">
-        <div class="col-sm-9" style="background-color:lavender;"><br>
-
-
+        <div class="col-sm-9" style="background-color:lavender;">
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         </div>
 
 

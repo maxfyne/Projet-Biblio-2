@@ -31,17 +31,26 @@
                 else
                 /* L'utilisateur a cliqué sur Rechercher, l'entrée chercher <> vide, on traite le formulaire */
                 {
-                require_once('connexion-bdrive.php');
-                    $stmt = $connexion->prepare("SELECT nolivre, titre, anneeparution FROM livre INNER JOIN auteur ON (livre.noauteur = auteur.noauteur) where auteur.nom=:nomauteur ORDER BY anneeparution");
-                    $nomauteur = $_POST["nomauteur"];
+                    echo '
+                    <form action="" method = "post" ">
+                    <br><br>
+                    nomauteur: <input name="nomauteur" type="text" size ="30"">
+                    <br><br>
+                    <input type="submit" name="chercher"  value="Rechercher">
+                    </form><br><br>';
+
+                    require_once('connexion-bdrive.php');
+                        $stmt = $connexion->prepare("SELECT nolivre, titre, anneeparution FROM livre INNER JOIN auteur ON (livre.noauteur = auteur.noauteur) where auteur.nom=:nomauteur ORDER BY anneeparution");
+                        $nomauteur = $_POST["nomauteur"];
     
-                    $stmt->bindValue(":nomauteur", $nomauteur);
-                    $stmt->setFetchMode(PDO::FETCH_OBJ);
-                    $stmt->execute();
+                        $stmt->bindValue(":nomauteur", $nomauteur);
+                        $stmt->setFetchMode(PDO::FETCH_OBJ);
+                        $stmt->execute();
 
                     while($enregistrement = $stmt->fetch())
                     {
-                    echo '<h5>',"<a href='detail.php?nolivre=".$enregistrement->nolivre."'>".$enregistrement->titre, ' ', ' ', '(', $enregistrement->anneeparution, ')', "</a>",'</h5>';
+                        echo '<br>';
+                        echo '<h5>',"<a href='detail.php?nolivre=".$enregistrement->nolivre."'>".$enregistrement->titre, ' ', ' ', '(', $enregistrement->anneeparution, ')', "</a>",'</h5>';
                     }
 
                 }
