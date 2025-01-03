@@ -1,3 +1,7 @@
+<?php
+// Démarrage de la session, instruction a placer en tête de script
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -18,6 +22,7 @@
 
     <div class="row">
         <div class="col-sm-9" style="background-color:lavender;">
+        <br><br>
         <?php
         require_once('connexion-bdrive.php');
 
@@ -55,25 +60,27 @@
             <?php
                 if (isset($_SESSION["prenom"]))
                 {
-                echo '<form method="POST">';
-                echo '<input type="submit" name="btn-ajoutpanier" class="btn btn-success btn-lg" value="Ajouter au panier"></input>';
-                echo '</form>';
+                    echo '<h5> Disponible </h5>';
+                    echo '<form method="POST">';
+                    echo '<input type="submit" name="btn-ajoutpanier" class="btn btn-success btn-lg" value="Ajouter au panier"></input>';
+                    echo '</form>';
                 }
                 else
                 {
-                echo '<p class="text-primary">Pour pouvoir réserver ce livre vous devez posséder un compte et vous identifier !</p>';
+                    echo '<p class="text-primary">Pour pouvoir réserver ce livre connectez-vous !</p>';
                 }
 
-                if(!isset($_SESSION['panier'])){
-                // Initialisation du panier
-                $_SESSION['panier'] = array();
+                if(!isset($_SESSION['panier']))
+                {
+                    // Initialisation du panier
+                    $_SESSION['panier'] = array();
                 }
 
-                // On ajoute les entrées dans le tableau
+
                 if(isset($_POST['btn-ajoutpanier']))
                 {
-                array_push($_SESSION['panier'], $enregistrement->titre);  
-                echo "Livre ajouté à votre panier :)";
+                    array_push($_SESSION['panier'], $enregistrement->titre);  
+                    echo "Livre ajouté à votre panier";
                 }
             ?>
         </div>

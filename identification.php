@@ -46,6 +46,9 @@ else
         $mel = $_POST['mel'];
         $motdepasse = $_POST['motdepasse'];
 
+        // variable de session
+        $_SESSION["mel"] = $mel;
+
         $stmt = $connexion->prepare("SELECT * FROM utilisateur where mel=:mel AND motdepasse=:motdepasse");
         $stmt->bindValue(":mel", $mel); // pas de troisième paramètre STR par défaut
         $stmt->bindValue(":motdepasse", $motdepasse); // de meme
@@ -64,6 +67,7 @@ else
             $nom = $enregistrement->nom;
             $_SESSION["prenom"] = $enregistrement->prenom;
             $_SESSION["nom"] = $enregistrement->nom;
+
         }
         else {
             echo "Echec à la connexion.";
