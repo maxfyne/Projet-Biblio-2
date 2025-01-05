@@ -38,13 +38,23 @@ session_start();
 
                 $nb_livresempruntés = count($_SESSION['panier']); 
                 $nb_emprunts = (5 - $nb_livresempruntés);
-                echo '<h5 class="couleur3" id="reste">(Il vous reste ', $nb_emprunts ,' réservations possibles.)</h5>';
-                for ($id =0 ;$id < $nb_livresempruntés; $id++)
+                echo '<h5>(Il vous reste ', $nb_emprunts ,' réservations possibles.)</h5>';
+                
+                foreach($_SESSION['panier'] as $nolivre)
                 {
                     echo '<form method="POST">';
-                    echo '<p id="contenupanier">', $_SESSION['panier'][$id];
-                    echo '<input type="submit" id="contenupanier" name="annuler" class="btn btn-danger"  value="suprimer du panier">';
-                    echo '</form></p>';
+                    require_once('connexion-bdrive.php');
+                    $stmt = $connexion->prepare("SELECT titre FROM livre  where nolivre = $nolivre");
+                    $stmt->setFetchMode(PDO::FETCH_OBJ);
+                    $stmt->execute();
+
+                    while($enregistrement = $stmt->fetch())
+                    {
+                    echo $enregistrement->titre;
+                    }
+
+                    echo '<input type="submit" id="contenupanier" name="annuler" value="suprimer du panier">';
+                    echo '</form>';
                 } 
           
                 if (empty($_SESSION['panier']))
@@ -60,7 +70,7 @@ session_start();
                     {
                         echo '<input type="hidden" name="nolivre[]" value="'. $nolivre .'">';
                     }
-                    echo '<input type="submit" name="valider" class="btn btn-success btn-lg" value="Valider le panier">';
+                    echo '<input type="submit" name="valider" value="Valider le panier">';
                     echo '</form>';
                 }
 
@@ -83,9 +93,9 @@ session_start();
                         // trim nous permet d'enlever les espaces blancs
                         $nolivre = trim($nolivre);
       
-                        echo "Tentative d'ajout du livre: $nolivre<br>";
+                        echo "Tentative d'ajout du livre : " .$_SESSION["titre"] ."<br>";
       
-                        // Requête pour ajouter les informations du livre dans la base de données SQL
+                        // Essayer de completer la base de donnée emprunter
                         try 
                         {
                             $stmt = $connexion->prepare("INSERT INTO emprunter(mel, nolivre, dateemprunt) VALUES (:mel, :nolivre, :dateemprunt)");
@@ -93,17 +103,17 @@ session_start();
                             $stmt->bindValue(':nolivre', $nolivre, PDO::PARAM_STR);
                             $stmt->bindValue(':dateemprunt', $dateemprunt, PDO::PARAM_STR);
                             $stmt->execute();
-                            echo "Le livre $nolivre a été ajouté avec succès.<br>";
+                            echo "Le livre " .$_SESSION["titre"] ." a été ajouté avec succès. <br>";
                         } 
                 
-                        catch (PDOException $e) 
+                        catch (PDOException $e) // Que faire en cas d'erreur tout en nous donnant l'erreur
                         {
-                            echo "Erreur lors de l'ajout du livre $nolivre: " . $e->getMessage() ."<br>";
+                            echo "Erreur lors de l'ajout du livre".$_SESSION["titre"] .": " . $e->getMessage() ."<br>";
                         }
                     }
                     // Vider le panier après la validation
                     $_SESSION['panier'] = array();
-                    header("refresh 0"); // Rediriger pour éviter la resoumission du formulaire
+                    
                     exit;
                 }
             ?>

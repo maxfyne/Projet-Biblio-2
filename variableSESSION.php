@@ -21,7 +21,10 @@ echo "<br>";
 echo "Entrée 'nom' dans le tableau de Session : ".$_SESSION["nom"];
 echo "<br>";
 echo $_SESSION["mel"];
-
+foreach ($_SESSION["panier"] as $nolivre)
+{
+echo $nolivre;
+}
 ?>
 
 </body>

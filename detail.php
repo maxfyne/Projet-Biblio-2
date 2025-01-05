@@ -49,6 +49,9 @@ session_start();
                     echo "<br>";
                     echo $enregistrement->detail;
 
+                    $titre = $enregistrement->titre;
+                    $_SESSION["titre"] = $enregistrement->titre;
+
                 ?>
             </div>
 
@@ -62,12 +65,12 @@ session_start();
                 {
                     echo '<h5> Disponible </h5>';
                     echo '<form method="POST">';
-                    echo '<input type="submit" name="btn-ajoutpanier" class="btn btn-success btn-lg" value="Ajouter au panier"></input>';
+                    echo '<input type="submit" name="btn-ajoutpanier" " value="Ajouter au panier"></input>';
                     echo '</form>';
                 }
                 else
                 {
-                    echo '<p class="text-primary">Pour pouvoir réserver ce livre connectez-vous !</p>';
+                    echo 'Pour pouvoir réserver ce livre connectez-vous !</p>';
                 }
 
                 if(!isset($_SESSION['panier']))
@@ -79,7 +82,7 @@ session_start();
 
                 if(isset($_POST['btn-ajoutpanier']))
                 {
-                    array_push($_SESSION['panier'], $enregistrement->titre);  
+                    array_push($_SESSION['panier'], $nolivre); //Liste des livres dans la variable de session panier
                     echo "Livre ajouté à votre panier";
                 }
             ?>
