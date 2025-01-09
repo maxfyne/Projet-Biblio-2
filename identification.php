@@ -59,21 +59,27 @@ else
         $stmt->execute();
         $enregistrement = $stmt->fetch(); // boucle while inutile
 
-        if ($enregistrement) {
+        if ($enregistrement) 
+        {
             echo '<h4>Connexion réussie ! Bienvenue '.$enregistrement->prenom.'</h4>';
 
             // variable de session 
             $prenom = $enregistrement->prenom;
             $nom = $enregistrement->nom;
+            $profil = $enregistrement->profil;
             $_SESSION["prenom"] = $enregistrement->prenom;
             $_SESSION["nom"] = $enregistrement->nom;
+            $_SESSION["profil"] = $enregistrement->profil;
+
 
         }
-        else {
+        else 
+        {
             echo "Echec à la connexion.";
         }               
         // Bouton de déconnexion
-        if (!isset($_POST['btnSeDeconnecter'])) {
+        if (!isset($_POST['btnSeDeconnecter'])) 
+        {
             echo '
                 <form action="" method = "post" ">
                 <input type="submit" name="btnSeDeconnecter" value="Se déconnecter">
@@ -86,6 +92,12 @@ else
             }
         }
     }
+
+    if ($_SESSION["profil"] == "admin")
+    {
+        echo "mode trop bg";
+    }
+
     /*FIN FORMULAIRE*/
 }
 ?>

@@ -89,10 +89,7 @@ session_start();
       
                     // Boucle sur tous les livres dans le panier
                     foreach($_SESSION['panier'] as $nolivre) 
-                    {
-                        // trim nous permet d'enlever les espaces blancs
-                        $nolivre = trim($nolivre);
-      
+                    {      
                         echo "Tentative d'ajout du livre : " .$_SESSION["titre"] ."<br>";
       
                         // Essayer de completer la base de donnée emprunter
@@ -113,8 +110,6 @@ session_start();
                     }
                     // Vider le panier après la validation
                     $_SESSION['panier'] = array();
-                    
-                    exit;
                 }
             ?>
         </div>
