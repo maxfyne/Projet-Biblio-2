@@ -16,12 +16,19 @@ require_once 'connexion-bdrive.php';
 if (isset($_SESSION['prenom'])) { // On vérifie si l'utilisateur est connecté
     echo '<h4>Connexion réussie ! Bienvenue ' . $_SESSION['prenom'] . '</h4>';
     echo '<form action="" method="post">';
-    echo '<input type="submit" name="btnSeDeconnecter" value="Se déconnecter">';
+    echo '<input type="submit" name="btnSeDeconnecter" value="Se déconnecter 👋​">';
     echo '</form>';
 
     if (isset($_POST['btnSeDeconnecter'])) {
         session_unset();
         header('Location: accueil.php'); //nous redirige vers le meme page mais cette fois ci sans les variables de seesions qu'on aura effacer juste au dessus
+    }
+
+    if ($_SESSION["profil"] == "admin") // On vérifie si l'utilisateur est un administrateur
+    {
+        echo '<form class="d-flex" action="Ajoutlivre.php" method="post"> 
+        <input type="submit" name="test" value=" ⚠️ PASSEZ EN MODE ADMIN ⚠️">
+        </form>';
     }
 } 
 else 
@@ -39,7 +46,8 @@ else
             <input type="submit" name="btnSeConnecter"  value="Se connecter">
             </form>';
     }
-    else {/* L'utilisateur a cliqué sur Se connecter, l'entrée btnSeConnecter <> vide, on traite le formulaire */
+    else 
+    {/* L'utilisateur a cliqué sur Se connecter, l'entrée btnSeConnecter <> vide, on traite le formulaire */
             
         // Bouton de connection
         require_once 'connexion-bdrive.php';
@@ -82,24 +90,28 @@ else
         {
             echo '
                 <form action="" method = "post" ">
-                <input type="submit" name="btnSeDeconnecter" value="Se déconnecter">
+                <input type="submit" name="btnSeDeconnecter" value="Se déconnecter 👋​">
                 </form>';
                     
         // Traitement de la déconnexion
-            if (isset($_POST['btnSeDeconnecter'])) {
+            if (isset($_POST['btnSeDeconnecter'])) 
+            {
                 session_unset(); // Supprime toutes les variables de session
                 echo '<h4>Vous êtes déconnecté.</h4>';
             }
         }
     }
-
-    if ($_SESSION["profil"] == "admin")
+    
+    if ($_SESSION["profil"] == "admin") // On vérifie si l'utilisateur est un administrateur
     {
-        echo "mode trop bg";
+        echo '<form class="d-flex" action="Ajoutlivre.php" method="post"> 
+        <input type="submit" name="test" value="⚠️ PASSEZ EN MODE ADMIN ⚠️">
+        </form>';
     }
 
     /*FIN FORMULAIRE*/
 }
 ?>
+</form>
 </body>
 </html>

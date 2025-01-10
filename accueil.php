@@ -24,6 +24,7 @@ session_start();
 </head>
 <body>
 <div class="container text-center">
+    
 
     <?php
         include 'barre.php';
