@@ -13,21 +13,25 @@
 
 
 require_once 'connexion-bdrive.php';
-if (isset($_SESSION['prenom'])) { // On vérifie si l'utilisateur est connecté
+if (isset($_SESSION['prenom'])) 
+{   // On vérifie si l'utilisateur est connecté
     echo '<h4>Connexion réussie ! Bienvenue ' . $_SESSION['prenom'] . '</h4>';
     echo '<form action="" method="post">';
     echo '<input type="submit" name="btnSeDeconnecter" value="Se déconnecter 👋​">';
     echo '</form>';
 
-    if (isset($_POST['btnSeDeconnecter'])) {
+    if (isset($_POST['btnSeDeconnecter'])) 
+    {
         session_unset();
         header('Location: accueil.php'); //nous redirige vers le meme page mais cette fois ci sans les variables de seesions qu'on aura effacer juste au dessus
     }
 
     if ($_SESSION["profil"] == "admin") // On vérifie si l'utilisateur est un administrateur
     {
-        echo '<form class="d-flex" action="Ajoutlivre.php" method="post"> 
-        <input type="submit" name="test" value=" ⚠️ PASSEZ EN MODE ADMIN ⚠️">
+        echo '
+        <br><br>
+        <form class="d-flex" action="Ajoutlivre.php" method="post"> 
+        <input type="submit" name="test" value="⚠️ PASSEZ EN MODE ADMIN ⚠️">
         </form>';
     }
 } 
@@ -100,14 +104,17 @@ else
                 echo '<h4>Vous êtes déconnecté.</h4>';
             }
         }
+        
+        if ($_SESSION["profil"] == "admin") // On vérifie si l'utilisateur est un administrateur
+        {
+            echo '
+            <br><br>
+            <form class="d-flex" action="Ajoutlivre.php" method="post"> 
+            <input type="submit" name="test" value="⚠️ PASSEZ EN MODE ADMIN ⚠️">
+            </form>';
+        }
     }
     
-    if ($_SESSION["profil"] == "admin") // On vérifie si l'utilisateur est un administrateur
-    {
-        echo '<form class="d-flex" action="Ajoutlivre.php" method="post"> 
-        <input type="submit" name="test" value="⚠️ PASSEZ EN MODE ADMIN ⚠️">
-        </form>';
-    }
 
     /*FIN FORMULAIRE*/
 }

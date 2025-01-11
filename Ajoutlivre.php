@@ -24,71 +24,80 @@ session_start();
         <div class="col-sm-9" style="background-color:lavender;">
             <br><br>
             <form>
-                <?php
-                /*DEBUT DES FORMULAIRES*/
-                if (!isset($_POST['Ajouter']))
-                { /* L'entrée chercher est vide = le formulaire n'a pas été submit=posté, on affiche le formulaire */
-                    echo '
-                        <form action="" method = "post" ">
-                        Auteur:<input name="nomauteur" type="text" size ="30"">
-                        <br>
-                        Titre:<input name="titre" type="text" size ="30"">
-                        <br>
-                        ISBN13:<input name="isbn13" type="text" size ="30"">
-                        <br>
-                        Année de parution:<input name="anneeP" type="text" size ="30"">
-                        <br>
-                        Résumé:<input name="resume" type="text" size ="30"">
-                        <br>
-                        Image:<input name="image" type="text" size ="30"">
+                <h5> Ajout de livre à la base de donnée Veullez compléter ce formulaire</h5>
+                <br> <!-- affiche les formulaires-->
+                <form action="" method="post">
+                    <?php
+                        require_once 'connexion-bdrive.php';
+                        $stmt_auteurs = $connexion->prepare("SELECT noauteur, nom FROM auteur");
+                        $stmt_auteurs->execute(); //A CHANGER
+                        $auteurs = $stmt_auteurs->fetchAll(PDO::FETCH_ASSOC); // verifie si il en manque
+                    ?>
 
-                        <input type="submit" name="Ajouter"  value="Ajouter">
-                        </form>';
-                } 
-                else
-                /* L'utilisateur a cliqué sur Rechercher, l'entrée chercher <> vide, on traite le formulaire */
-                {
-                    echo '
-                        <form action="" method = "post" ">
-                        Auteur:<input name="nomauteur" type="text" size ="30"">
-                        <br>
-                        Titre:<input name="titre" type="text" size ="30"">
-                        <br>
-                        ISBN13:<input name="isbn13" type="text" size ="30"">
-                        <br>
-                        Année de parution:<input name="anneeP" type="text" size ="30"">
-                        <br>
-                        Résumé:<input name="resume" type="text" size ="30"">
-                        <br>
-                        Image:<input name="image" type="text" size ="30"">
+                    <div>
+                        <select class="form-control" id="noauteur" name="noauteur" required>
+                            <?php 
+                                foreach ($auteurs as $auteur): 
+                            ?>
 
-                        <input type="submit" name="Ajouter"  value="Ajouter">
-                        </form>';
+                            <option value="<?= $auteur['noauteur']; ?>"><?= $auteur['nom']; ?></option>     <!--Pour le serveur revoir la video-->
 
-                    require_once('connexion-bdrive.php');
-                        $stmt = $connexion->prepare("SELECT nolivre, titre, anneeparution FROM livre INNER JOIN auteur ON (livre.noauteur = auteur.noauteur) where auteur.nom=:nomauteur ORDER BY anneeparution");
-                        $nomauteur = $_POST["nomauteur"];
-    
-                        $stmt->bindValue(":nomauteur", $nomauteur);
-                        $stmt->setFetchMode(PDO::FETCH_OBJ);
-                        $stmt->execute();
+                            <?php 
+                                endforeach; //On est obliger de fermer la boucle sinon l'ordi ne vas pas la fermé
+                            ?>
+                            
+                        </select>
+                    </div>
+                    <br>
 
-                    while($enregistrement = $stmt->fetch())
-                    {
-                        echo '<br>';
-                        echo '<h5>',"<a href='detail.php?nolivre=".$enregistrement->nolivre."'>".$enregistrement->titre, ' ', ' ', '(', $enregistrement->anneeparution, ')', "</a>",'</h5>';
-                    }
+                    <!-- class="form-control" nous permet de faire en sorte que la barre prenne toute la ligne -->
 
-                }
+                    <div>
+                        <input type="text" class="form-control" id="titre" name="titre" placeholder="Titre" required>
+                    </div>
+
+                    <br>
+
+                    <div>
+                        <input type="text" class="form-control" id="isbn13" name="isbn13" placeholder="ISBN13" required>
+                    </div>
+
+                    <br>
+
+                    <div>
+                        <input type="text" class="form-control" id="anneeparution" name="anneeparution" placeholder="Année de Parution" required>
+                    </div>
+
+                    <br>
+
+                    <div>
+                        <input type="text" class="form-control" id="detail" name="detail" placeholder="Détails" required style="height: 100px;">
+                    </div>
+
+                    <br>
+
+                    <div>
+                        <input type="text" class="form-control" id="photo" name="photo" placeholder="Nom de Fichier Photo" required>
+                    </div>
+
+                    <br>
+
+                <button type="submit" class="btn btn-primary">Ajouter le livre</button>
+
+                <?php 
+                    $dateajout = date('Y-m-d H:i:s');
                 ?>
+            </form>
+                
             </form>
 
         </div>
-    </div>
+        
+        <?php
+            include 'identification.php';
+        ?>
 
-    <?php
-        include 'identification.php';
-    ?>
+    </div>
     
 </body>
 

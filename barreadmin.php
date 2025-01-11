@@ -17,22 +17,24 @@
 
             <form class="d-flex" action="Ajoutuser.php" method="post">
                 <?php
-                if (!isset($_POST['ajoutuser'])) {
+                if (!isset($_POST['ajoutuser'])) 
+                {
                     echo '
                         <form action="" method = "post" ">
-                        <input type="submit" name="ajoutuser"  value="Ajouter un nouvel utilisateur">
+                        <input type="submit" name="ajoutuser"  value="Ajouter un nouvel utilisateur 🧐">
                         </form>';
-                    }
+                }
                 ?>
             </form>
             <form class="d-flex" action="Ajoutlivre.php" method="post">
                 <?php
-                if (!isset($_POST['ajoutlivre'])) {
+                if (!isset($_POST['ajoutlivre'])) 
+                {
                     echo '
                         <form action="" method = "post" ">
-                        <input type="submit" name="ajoutlivre"  value="Ajouter un nouveau livre">
+                        <input type="submit" name="ajoutlivre"  value="Ajouter un nouveau livre 📚">
                         </form>';
-                    }
+                }
                 ?>
             </form>
 
