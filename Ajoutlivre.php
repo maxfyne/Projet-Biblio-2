@@ -25,7 +25,7 @@ session_start();
             <?php
                 require_once 'connexion-bdrive.php';
 
-                if ($_SERVER["REQUEST_METHOD"] == "POST" and $_SESSION["cle"]==0) // si c'est la premiere fois qu'on fais tourner ce prg $_SESSION["test"]=1 nous empechant de recevoir des messages d'erreur
+                if ($_SERVER["REQUEST_METHOD"] == "POST" and $_SESSION["cleLivre"]==0) // si c'est la premiere fois qu'on fais tourner ce prg $_SESSION["test"]=1 nous empechant de recevoir des messages d'erreur
                 { // Récupère les données du formulaire qui lui n'est pas en php -> on utilise des données serveurs 
                     $noauteur = $_POST['noauteur'];
                     $titre = $_POST['titre'];
@@ -51,7 +51,7 @@ session_start();
                     // Exécution de la requête
                     if ($stmt->execute()) 
                     {
-                        echo "<h5>Le livre " .$titre ." de " .$noauteur ."a été ajouté avec succès !</h5>";
+                        echo "<h5>Le livre " .$titre ." a été ajouté avec succès !</h5>";
                     }
 
                     //pas besoins de else car le formulaire doit etre completer à 100% pour pouvoir le valider
@@ -116,7 +116,7 @@ session_start();
                     <button type="submit" class="btn btn-primary">Ajouter le livre</button>
                     
                     <?php
-                        $_SESSION["cle"]=0
+                        $_SESSION["cleLivre"]=0
                     ?>
 
                 </form>

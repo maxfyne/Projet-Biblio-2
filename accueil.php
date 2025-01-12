@@ -4,8 +4,9 @@
 // Démarrage de la session, instruction a placer en tête de script
 session_start();
 
-//init de la variable de session cle qui va nous servir dans Ajoutlivre.php pour ne pas qu'il y est d'erreur lier à des valeurs non défini
-$_SESSION["cle"]=1;
+//init de la variable de session cle qui va nous servir dans Ajoutlivre/user.php pour ne pas qu'il y est d'erreur lier à des variables non défini
+$_SESSION["cleLivre"]=1;
+$_SESSION["cleUser"]=1;
 
 ?>
 
@@ -33,10 +34,11 @@ $_SESSION["cle"]=1;
     ?>
 
     <div class="row">
-        <div class="col-sm-9" style="background-color:lavender;"><h5>Dernière aquisition</h5><br>
+        <div class="col-sm-9" style="background-color:lavender;">
+            <h5>Dernière aquisition</h5>
+            <br>
 
-
-
+            
         <!-- DEBUT CAROUSSEL -->
 
 

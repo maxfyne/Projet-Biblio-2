@@ -24,8 +24,14 @@
                         <input type="submit" name="ajoutuser"  value="Ajouter un nouvel utilisateur 🧐">
                         </form>';
                 }
+                if (isset($_POST['ajoutuser'])) 
+                {
+                    $_SESSION["cleUser"]=1;
+                }
                 ?>
             </form>
+
+
             <form class="d-flex" action="Ajoutlivre.php" method="post">
                 <?php
                 if (!isset($_POST['ajoutlivre'])) 
@@ -35,7 +41,25 @@
                         <input type="submit" name="ajoutlivre"  value="Ajouter un nouveau livre 📚">
                         </form>';
                 }
+                if (isset($_POST['ajoutlivre'])) 
+                {
+                    $_SESSION["cleLivre"]=1;
+                }
                 ?>
+            </form>
+
+
+            <form class="d-flex" action="accueil.php" method="post">
+                <?php
+                if (!isset($_POST['retouraccueil'])) 
+                {
+                    echo '
+                        <form action="" method = "post" ">
+                        <input type="submit" name="retouraccueil"  value="Retour au menu principal 🏡">
+                        </form>';
+                }
+                ?>
+                <br>
             </form>
 
         <!-- FIN NAVBAR -->

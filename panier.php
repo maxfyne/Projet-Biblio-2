@@ -77,8 +77,10 @@ session_start();
                 if(isset($_POST['annuler']))
                 {
                     unset($_SESSION['panier'][array_search($_SESSION['panier'][$id], $_SESSION['panier'])]);
-                    sort($_SESSION['panier']);
                     header("refresh: 0");
+
+                    //unset() = Supprimer//
+                    //array_search = Cherche la position de l'élément ($id)  dans le tableau $_SESSION['panier'].//
                 }
 
                 if(isset($_POST['valider']))
