@@ -1,10 +1,12 @@
-<!-- VARIABLE DE SESSION A METTRE DANS UNE SECONDE PAGE-->
-<!-- FAIRE DES FICHIERS ALERTANIF POUR DES FONCTION COMME LE COROUSSEL QUI EN EST UN EXEMPLE-->
-<!-- COMMENTE LES LIGNES-->
+
 
 <?php
 // Démarrage de la session, instruction a placer en tête de script
 session_start();
+
+//init de la variable de session cle qui va nous servir dans Ajoutlivre.php pour ne pas qu'il y est d'erreur lier à des valeurs non défini
+$_SESSION["cle"]=1;
+
 ?>
 
 
@@ -90,6 +92,9 @@ session_start();
         <?php
             include 'identification.php';
         ?>
+
+
+
 
         </div>
     </div>

@@ -22,25 +22,56 @@ session_start();
 
     <div class="row">
         <div class="col-sm-9" style="background-color:lavender;">
-            <br><br>
-            <form>
-                <h5> Ajout de livre à la base de donnée Veullez compléter ce formulaire</h5>
-                <br> <!-- affiche les formulaires-->
-                <form action="" method="post">
-                    <?php
-                        require_once 'connexion-bdrive.php';
-                        $stmt_auteurs = $connexion->prepare("SELECT noauteur, nom FROM auteur");
-                        $stmt_auteurs->execute(); //A CHANGER
-                        $auteurs = $stmt_auteurs->fetchAll(PDO::FETCH_ASSOC); // verifie si il en manque
-                    ?>
+            <?php
+                require_once 'connexion-bdrive.php';
 
+                if ($_SERVER["REQUEST_METHOD"] == "POST" and $_SESSION["cle"]==0) // si c'est la premiere fois qu'on fais tourner ce prg $_SESSION["test"]=1 nous empechant de recevoir des messages d'erreur
+                { // Récupère les données du formulaire qui lui n'est pas en php -> on utilise des données serveurs 
+                    $noauteur = $_POST['noauteur'];
+                    $titre = $_POST['titre'];
+                    $isbn13 = $_POST['isbn13'];
+                    $anneeparution = $_POST['anneeparution'];
+                    $detail = $_POST['detail'];
+                    $photo = $_POST['photo'];
+                    $dateajout = date('Y-m-d');
+            
+            
+                    $stmt = $connexion->prepare("INSERT INTO livre (noauteur, titre, isbn13, anneeparution, detail, photo, dateajout) 
+                    VALUES (:noauteur, :titre, :isbn13, :anneeparution, :detail, :photo, :dateajout)");
+            
+                    // Préparation de la requête d'insertion
+                    $stmt->bindParam(':noauteur', $noauteur);
+                    $stmt->bindParam(':titre', $titre);
+                    $stmt->bindParam(':isbn13', $isbn13);
+                    $stmt->bindParam(':anneeparution', $anneeparution);
+                    $stmt->bindParam(':detail', $detail);
+                    $stmt->bindParam(':photo', $photo);
+                    $stmt->bindParam(':dateajout', $dateajout);
+            
+                    // Exécution de la requête
+                    if ($stmt->execute()) 
+                    {
+                        echo "<h5>Le livre " .$titre ." de " .$noauteur ."a été ajouté avec succès !</h5>";
+                    }
+
+                    //pas besoins de else car le formulaire doit etre completer à 100% pour pouvoir le valider
+
+                }
+                    
+                $stmt_auteurs = $connexion->prepare("SELECT noauteur, nom FROM auteur");
+                $stmt_auteurs->execute();
+                $auteurs = $stmt_auteurs->fetchAll(PDO::FETCH_ASSOC);
+
+            ?>
+            <form action="" method="post">
+                <form>
                     <div>
                         <select class="form-control" id="noauteur" name="noauteur" required>
                             <?php 
                                 foreach ($auteurs as $auteur): 
                             ?>
 
-                            <option value="<?= $auteur['noauteur']; ?>"><?= $auteur['nom']; ?></option>     <!--Pour le serveur revoir la video-->
+                            <option value="<?= $auteur['noauteur']; ?>"><?= $auteur['nom']; ?></option>     <!--Dans l'ordre des num attitré on fait aparaitre les noms d'auteurs-->
 
                             <?php 
                                 endforeach; //On est obliger de fermer la boucle sinon l'ordi ne vas pas la fermé
@@ -82,12 +113,13 @@ session_start();
 
                     <br>
 
-                <button type="submit" class="btn btn-primary">Ajouter le livre</button>
+                    <button type="submit" class="btn btn-primary">Ajouter le livre</button>
+                    
+                    <?php
+                        $_SESSION["cle"]=0
+                    ?>
 
-                <?php 
-                    $dateajout = date('Y-m-d H:i:s');
-                ?>
-            </form>
+                </form>
                 
             </form>
 
