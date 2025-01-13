@@ -23,98 +23,58 @@ session_start();
     <div class="row">
         <div class="col-sm-9" style="background-color:lavender;">
             <?php
-                require_once 'connexion-bdrive.php';
+                echo "<h5> Ajout livre <h5>";
 
-                if ($_SERVER["REQUEST_METHOD"] == "POST" and $_SESSION["cleUser"]==0) // si c'est la premiere fois qu'on fais tourner ce prg $_SESSION["test"]=1 nous empechant de recevoir des messages d'erreur
-                { // Récupère les données du formulaire qui lui n'est pas en php -> on utilise des données serveurs 
-                    $mel = $_POST['mel'];
-                    $motdepasse = $_POST['motdepasse'];
-                    $nom = $_POST['nom'];
-                    $prenom = $_POST['prenom'];
-                    $adresse = $_POST['adresse'];
-                    $ville = $_POST['ville'];
-                    $codepostal = $_POST['codepostal'];
+        
+                /* L'entrée chercher est vide = le formulaire n'a pas été submit=posté, on affiche le formulaire */
+                echo '
+                    <form action="" method = "post" ">
+                    mel:<input name="mel" type="text"  class="form-control" size ="10"">
+                    motdepasse:<input name="motdepasse" type="text" class="form-control"size ="10"">
+                    nom:<input name="nom" type="text" class="form-control" size ="10"">
+                    prenom:<input name="prenom" type="text" class="form-control" size ="10"">
+                    adresse:<input name="adresse" type="text" class="form-control" size ="10"">
+                    ville:<input name="ville" type="text" class="form-control" size ="10"">
+                    codepostal:<input name="codepostal" type="text" class="form-control" size ="10"">
+                    <input type="submit" name="Ajouter"  value="Ajouter">
+                    </form>';
+        
+                if (isset($_POST['Ajouter']))
+                {
+                    $mel = $_POST["mel"];
+                    $motdepasse = $_POST["motdepasse"];
+                    $nom = $_POST["nom"];
+                    $prenom = $_POST["prenom"];
+                    $adresse = $_POST["adresse"];
+                    $ville = $_POST["ville"];
+                    $codepostal = $_POST["codepostal"];
+                    $motdepasse = $_POST["motdepasse"];
                     $profil = "client";
-            
-            
-                    $stmt = $connexion->prepare("INSERT INTO utilisateur (mel, motdepasse, nom, prenom, adresse, ville, codepostal, profil) 
-                    VALUES (:mel, :motdepasse, :nom, :prenom, :adresse, :ville, :codepostal, :profil)");
-            
-                    // Préparation de la requête d'insertion
-                    $stmt->bindParam(':mel', $mel);
-                    $stmt->bindParam(':motdepasse', $motdepasse);
-                    $stmt->bindParam(':nom', $nom);
-                    $stmt->bindParam(':prenom', $prenom);
-                    $stmt->bindParam(':adresse', $adresse);
-                    $stmt->bindParam(':ville', $ville);
-                    $stmt->bindParam(':codepostal', $codepostal);
-                    $stmt->bindParam(':profil', $profil);
-            
-                    // Exécution de la requête
-                    if ($stmt->execute()) 
-                    {
-                        echo "<h5>Le nouvel utilisateur " .$nom ." ".$prenom ." a été ajouté avec succès !</h5>";
-                    }
 
-                    //pas besoins de else car le formulaire doit etre completer à 100% pour pouvoir le valider
+                    require_once('connexion-bdrive.php');
+                    $stmt = $connexion->prepare("INSERT INTO utilisateur (mel, motdepasse, nom, prenom, adresse, ville, codepostal, profil) VALUES (:mel, :motdepasse, :nom, :prenom, :adresse, :ville, :codepostal, :profil)");
+
+                    $stmt->bindValue(':mel', $mel, PDO::PARAM_STR);
+                    $stmt->bindValue(':motdepasse', $motdepasse, PDO::PARAM_STR);
+                    $stmt->bindValue(':nom', $nom, PDO::PARAM_STR);
+                    $stmt->bindValue(':prenom', $prenom, PDO::PARAM_STR);
+                    $stmt->bindValue(':adresse', $adresse, PDO::PARAM_STR);
+                    $stmt->bindValue(':ville', $ville, PDO::PARAM_STR);
+                    $stmt->bindValue(':codepostal', $codepostal, PDO::PARAM_STR);
+                    $stmt->bindValue(':profil', $profil, PDO::PARAM_STR);
+
+
+                    $stmt->setFetchMode(PDO::FETCH_OBJ);
+                    $stmt->execute();
+
+
+                    echo "<h5> Ajout de l'auteur ".$nom ." " .$prenom. " completé <h5>";
+
+                //On aurait put mettre un seul echo mais bon ca fais plus propre//
 
                 }
-
-            ?>
-            <form action="" method="post">
-                <form>
-
-                    <!-- class="form-control" nous permet de faire en sorte que la barre prenne toute la ligne -->
-
-                    <div>
-                        <input type="text" class="form-control" id="mel" name="mel" placeholder="Adresse mail" required>
-                    </div>
-
-                    <br>
-
-                    <div>
-                        <input type="text" class="form-control" id="motdepasse" name="motdepasse" placeholder="Mot de passe" required>
-                    </div>
-
-                    <br>
-
-                    <div>
-                        <input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" required>
-                    </div>
-
-                    <br>
-
-                    <div>
-                        <input type="text" class="form-control" id="prenom" name="prenom" placeholder="Prénom" required>
-                    </div>
-
-                    <br>
-
-                    <div>
-                        <input type="text" class="form-control" id="adresse" name="adresse" placeholder="Adresse" required>
-                    </div>
-
-                    <br>
-
-                    <div>
-                        <input type="text" class="form-control" id="ville" name="ville" placeholder="Ville" required>
-                    </div>
-
-                    <br>
-
-                    <div>
-                        <input type="text" class="form-control" id="codepostal" name="codepostal" placeholder="Code postal" required>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Ajouter le livre</button>
-                    
-                    <?php
-                        $_SESSION["cleUser"]=0
-                    ?>
-
-                </form>
                 
-            </form>
+            ?>
 
         </div>
         
