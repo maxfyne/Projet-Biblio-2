@@ -6,7 +6,6 @@ session_start();
 
 //init de la variable de session cle qui va nous servir dans Ajoutlivre/user.php pour ne pas qu'il y est d'erreur lier à des variables non défini
 $_SESSION["cleLivre"]=1;
-$_SESSION["cleUser"]=1;
 
 ?>
 
