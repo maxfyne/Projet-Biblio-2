@@ -23,7 +23,7 @@ session_start();
     <div class="row">
         <div class="col-sm-9" style="background-color:lavender;">
             <?php
-                echo "<h5> Ajout livre <h5>";
+                echo "<h5> Ajout auteur <h5>";
 
         
                 /* L'entrée chercher est vide = le formulaire n'a pas été submit=posté, on affiche le formulaire */
