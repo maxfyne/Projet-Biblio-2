@@ -27,7 +27,7 @@
 
 
     <?php
-        while($enregistrement = $stmt->fetch())
+        while($enregistrement = $stmt->fetch())$
         {
             echo '<option value = "'.$enregistrement->numero.'">'.$enregistrement->libelle.'</option>';
         }

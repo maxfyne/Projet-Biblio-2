@@ -22,8 +22,8 @@ if (isset($_SESSION['prenom']))
 
     if (isset($_POST['btnSeDeconnecter'])) 
     {
-        session_unset();
-        header('Location: accueil.php'); //nous redirige vers le meme page mais cette fois ci sans les variables de seesions qu'on aura effacer juste au dessus
+        session_unset(); //nous redirige vers le meme page mais cette fois ci sans les variables de seesions qu'on aura effacer juste au dessus
+        header('Location: accueil.php'); 
     }
 
     if ($_SESSION["profil"] == "admin") // On vérifie si l'utilisateur est un administrateur
