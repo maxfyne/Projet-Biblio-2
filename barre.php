@@ -29,6 +29,19 @@
                 ?>
             </form>
             <br>
+            
+            <form class="d-flex" action="accueil.php" method="post">
+                <?php
+                if (!isset($_POST['retouraccueil'])) 
+                {
+                    echo '
+                        <form action="" method = "post" ">
+                        <input type="submit" name="retouraccueil"  value="Retour au menu principal 🏡">
+                        </form>';
+                }
+                ?>
+            </form>
+            
             <form class="d-flex" action="lister_livres.php" method="post">
                 <?php
                 /*DEBUT FORMULAIRE*/
@@ -66,19 +79,6 @@
 
                 }
                 ?>
-            </form>
-
-            <form class="d-flex" action="accueil.php" method="post">
-                <?php
-                if (!isset($_POST['retouraccueil'])) 
-                {
-                    echo '
-                        <form action="" method = "post" ">
-                        <input type="submit" name="retouraccueil"  value="Retour au menu principal 🏡">
-                        </form>';
-                }
-                ?>
-                <br>
             </form>
 
         <!-- FIN NAVBAR -->
