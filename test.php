@@ -27,8 +27,8 @@ session_start();
                 <?php
                 echo '
                     <h5> Ajout auteur <h5> 
-                    <form action="" method = "post" "> 
-                    <select class="form-select">';
+                    <form method ="POST" name = "auteur"> 
+                    <select>';
 
                 require_once 'connexion-bdrive.php';
 
@@ -38,7 +38,9 @@ session_start();
 
                 while ($enregistrement = $stmt_auteurs->fetch());
                 {
-                    echo "<option>$enregistrement->nom</option>";
+                    ?>
+                    <h5><option value=<?=$enregistrement->noauteur?>><?=$enregistrement->nom?></option>
+                    <?php
                 }
 
                 echo '
@@ -53,6 +55,7 @@ session_start();
         
                 if (isset($_POST['Ajouter']))
                 {
+                    $auteur = $_POST["auteur"];
                     $titre = $_POST["titre"];
                     $isbn13 = $_POST["isbn13"];
                     $anneeparution = $_POST["anneeparution"];
@@ -62,6 +65,7 @@ session_start();
 
                     require_once('connexion-bdrive.php');
                     $stmt = $connexion->prepare("INSERT INTO livre (noauteur, titre, isbn13, anneeparution, detail, photo, dateajout) VALUES (:noauteur, :titre, :isbn13, :anneeparution, :detail, :photo, :dateajout)");
+                    $stmt->bindValue(':auteur', $auteur, PDO::PARAM_STR);
                     $stmt->bindValue(':titre', $titre, PDO::PARAM_STR);
                     $stmt->bindValue(':isbn13', $isbn13, PDO::PARAM_STR);
                     $stmt->bindValue(':anneeparution', $anneeparution, PDO::PARAM_STR);

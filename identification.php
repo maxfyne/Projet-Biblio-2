@@ -34,11 +34,11 @@ if (isset($_SESSION['prenom']))
         <input type="submit" name="test" value="⚠️ PASSEZ EN MODE ADMIN ⚠️">
         </form>';
     }
-} 
+}
 else 
 {
     /*DEBUT FORMULAIRE*/
-    if (!isset($_POST['btnSeConnecter']) or (isset($_SESSION['prenom'])))
+    if (!isset($_POST['btnSeConnecter']))
         { /* L'entrée btnSeConnecter est vide = le formulaire n'a pas été submit=posté, on affiche le formulaire */
         echo '
             <form action="" method = "post" ">
