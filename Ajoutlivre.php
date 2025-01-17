@@ -23,8 +23,10 @@ session_start();
     <div class="row">
         <div class="col-sm-9" style="background-color:lavender;">
             <?php
+            if (isset($_SESSION['prenom']))
+            {
                 require_once 'connexion-bdrive.php';
-
+            
                 if ($_SERVER["REQUEST_METHOD"] == "POST" and $_SESSION["cleLivre"]==0) // si c'est la premiere fois qu'on fais tourner ce prg $_SESSION["test"]=1 nous empechant de recevoir des messages d'erreur
                 { // Récupère les données du formulaire qui lui n'est pas en php -> on utilise des données serveurs 
                     $noauteur = $_POST['noauteur'];
@@ -62,6 +64,11 @@ session_start();
                 $stmt_auteurs->execute();
                 $auteurs = $stmt_auteurs->fetchAll(PDO::FETCH_ASSOC);
 
+            }
+            else
+            {
+                echo '<h1> Retourner au menu principal </h1>';
+            }
             ?>
             <form action="" method="post">
                 <form>

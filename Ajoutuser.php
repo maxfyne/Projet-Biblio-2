@@ -23,6 +23,8 @@ session_start();
     <div class="row">
         <div class="col-sm-9" style="background-color:lavender;">
             <?php
+            if (isset($_SESSION['prenom']))
+            {
                 echo "<h5> Ajout auteur <h5>";
 
         
@@ -73,7 +75,12 @@ session_start();
                 //On aurait put mettre un seul echo mais bon ca fais plus propre//
 
                 }
-                
+            
+            }
+            else
+            {
+                echo '<h1> Retourner au menu principal </h1>';
+            }
             ?>
 
         </div>

@@ -27,20 +27,22 @@ session_start();
                 <?php
                 echo '
                     <h5> Ajout auteur <h5> 
-                    <form method ="POST" name = "auteur"> 
-                    <select>';
+                        <form action="" method="post">
+                        Auteur : <select name="txtAuteur">
+                    ';
 
                 require_once 'connexion-bdrive.php';
 
-                $stmt_auteurs = $connexion->prepare("SELECT noauteur, nom FROM auteur");
+                $stmt_auteurs = $connexion->prepare('SELECT noauteur, nom FROM auteur');
                 $stmt_auteurs ->setFetchMode(PDO::FETCH_OBJ);
                 $stmt_auteurs->execute();
+                $nomA = $enregistrement->nom;
+                $noauteurA = $enregistrement->noauteur;
 
                 while ($enregistrement = $stmt_auteurs->fetch());
                 {
-                    ?>
-                    <h5><option value=<?=$enregistrement->noauteur?>><?=$enregistrement->nom?></option>
-                    <?php
+                    echo $nomA;
+                    echo '<option value='.$noauteurA .'>'.$nomA .'</option>';
                 }
 
                 echo '
